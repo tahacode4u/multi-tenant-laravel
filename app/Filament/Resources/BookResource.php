@@ -23,8 +23,20 @@ class BookResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('data')
-                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('title')
+                    ->label('Book Title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('author')
+                    ->label('Author')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\FileUpload::make('image')
+                    ->label('Book Image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('books/images')
+                    ->nullable(),
             ]);
     }
 
@@ -42,7 +54,9 @@ class BookResource extends Resource
                     ->label('Author')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('image')
-                    ->label('Image'),
+                    ->label('Image')
+                    ->disk('public')
+                    ->square(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
