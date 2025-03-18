@@ -19,6 +19,11 @@ class BookResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
+    public static function getTable(): string
+    {
+        return (tenant()->getConnectionName()) . '.books';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,9 +59,7 @@ class BookResource extends Resource
                     ->label('Author')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('image')
-                    ->label('Image')
-                    ->disk('public')
-                    ->square(),
+                    ->label('Image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
